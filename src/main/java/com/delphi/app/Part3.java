@@ -1,4 +1,4 @@
 package com.delphi.app;
 
-public class Main {
+public class Part3 {
 }
