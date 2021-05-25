@@ -4,21 +4,21 @@ import org.junit.Test;
 
 public class Part4Test {
     Part4 part4 = new Part4();
+
     @Test
-    public void validConnString()
-    {
+    public void validConnString() {
         Assert.assertEquals("Port: localhost\n" +
                 "Instance name: MyTest\n" +
                 "IP: 8674", part4.connData("localhost\\MyTest,8674"));
     }
+
     @Test
-    public void inputNull()
-    {
+    public void inputNull() {
         Assert.assertEquals("Invalid connection type", part4.connData(null));
     }
+
     @Test
-    public void inputInvalidData()
-    {
+    public void inputInvalidData() {
         Assert.assertEquals("Invalid connection type", part4.connData("I think this is ip"));
     }
 }

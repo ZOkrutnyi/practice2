@@ -2,13 +2,12 @@ package com.delphi.app;
 
 
 public class Part1 {
-    public int getChar(String str, int pos)
-    {
-        if(str==null||pos<0||pos>str.length())
+    public int getChar(String str, int pos) {
+        if (str == null || pos < 0 || pos > str.length())
             return -1;
         char[] chars = str.toCharArray();
         for (int i = 0; i < chars.length; i++) {
-            if(i==pos-1)
+            if (i == pos - 1)
                 return chars[i];
         }
         return -1;
