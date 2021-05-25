@@ -7,8 +7,13 @@ public class Part4 {
     public String connData(String conn) {
         if (conn == null)
             return "Invalid connection type";
-        Pattern pattern = Pattern.compile("[a-zA-Z]+[\\\\]+[a-zA-Z]+,+\\d+");
-        Matcher matcher = pattern.matcher(conn);
+        Pattern fullConn = Pattern.compile("\\w+[\\\\]+[a-zA-Z]+,+\\d+");
+        // (.*)(\\)\w+[,](.*)
+        // [0-9](.*)(\\)\w+[,](.*)
+        // ^\w+[^\d]$
+        // ^\w+\\\w+$
+        // ^\w+,\d+$
+        Matcher matcher = fullConn.matcher(conn);
         if (matcher.find()) {
             return formValidData(matcher.group());
         }
@@ -27,5 +32,10 @@ public class Part4 {
 
     public static void main(String[] args) {
         System.out.println(new Part4().connData("localhost\\MyTest,8674"));
+        System.out.println(new Part4().connData("192.164.131.131\\MyTest,8674"));
+        System.out.println(new Part4().connData("localhost"));
+        System.out.println(new Part4().connData("localhost\\MyTest"));
+        System.out.println(new Part4().connData("localhost,1414"));
+
     }
 }
