@@ -1,7 +1,5 @@
 package com.delphi.app;
 
-import java.util.Locale;
-
 public class Part2 implements Comparable<String> {
     private String firstString;
     private String secondString;
