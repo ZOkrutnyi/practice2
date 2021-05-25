@@ -9,7 +9,6 @@ public class Part2Test {
     @Test
     public void compareSameWords()
     {
-
         assertTrue(part2.compareStr("hello", "HelLo"));
     }
     @Test

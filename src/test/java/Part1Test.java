@@ -1,45 +1,23 @@
 import com.delphi.app.Part1;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 
 public class Part1Test {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
-    private final PrintStream originalErr = System.err;
-
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
+    Part1 part1 = new Part1();
+    @Test
+    public void inputValid()
+    {
+        assertEquals(108, part1.getChar("Hello", 3));
     }
     @Test
-    public void validParams()
+    public void inputInvalid()
     {
-        Part1.main(new String[]{"Zakhar", "2"});
-        assertEquals("107"+System.lineSeparator(), outContent.toString());
+        assertEquals(-1, part1.getChar("hello", 10));
     }
     @Test
-    public void zeroParams()
+    public void inputNull()
     {
-        Part1.main(new String[]{});
-        assertEquals("Invalid arguments"+System.lineSeparator(), outContent.toString());
-    }
-    @Test
-    public void invalidParams()
-    {
-        Part1.main(new String[]{"Name", "ha"});
-        assertEquals("Invalid number"+System.lineSeparator(), outContent.toString());
-    }
-    @After
-    public void restoreStreams() {
-        System.setOut(originalOut);
-        System.setErr(originalErr);
+        assertEquals(-1, part1.getChar(null, 10));
     }
 }

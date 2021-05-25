@@ -2,31 +2,14 @@ package com.delphi.app;
 
 public class Part2 implements Comparable<String> {
     private String firstString;
-    private String secondString;
-
-    public String getSecondString() {
-        return secondString;
-    }
-
-    public void setSecondString(String secondString) {
-        this.secondString = secondString;
-    }
-
-    public String getFirstString() {
-        return firstString;
-    }
-
-    public void setFirstString(String firstString) {
-        this.firstString = firstString;
-    }
-
     public boolean compareStr(String firstString, String secondString)
     {
+        Part3 part3 = new Part3();
         if(firstString == null|| secondString==null)
             return false;
-        setFirstString(firstString.toLowerCase());
-        setSecondString(secondString.toLowerCase());
-        return getFirstString().compareTo(getSecondString()) == 0;
+        this.firstString = part3.toUpperCase(firstString);
+       secondString = part3.toUpperCase(secondString);
+        return this.firstString.compareTo(secondString) == 0;
     }
 
     public static void main(String[] args) {
