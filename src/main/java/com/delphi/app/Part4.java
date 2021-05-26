@@ -5,29 +5,31 @@ import java.util.regex.Pattern;
 
 public class Part4 {
     public String connData(String conn) {
+        String ip=null;
+        String name=null;
+        String port=null;
         if (conn == null)
             return "Invalid connection type";
-        Pattern fullConn = Pattern.compile("\\w+[\\\\]+[a-zA-Z]+,+\\d+");
-        // (.*)(\\)\w+[,](.*)
-        // [0-9](.*)(\\)\w+[,](.*)
-        // ^\w+[^\d]$
-        // ^\w+\\\w+$
-        // ^\w+,\d+$
-        Matcher matcher = fullConn.matcher(conn);
-        if (matcher.find()) {
-            return formValidData(matcher.group());
-        }
-        return "Invalid connection type";
-    }
+        Pattern ipPattern = Pattern.compile("^([^\\\\]\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\w+([\\\\,]))|^\\w+$");
+        Pattern namePattern = Pattern.compile("\\\\\\w+(,|$)");
+        Pattern portPattern = Pattern.compile(",\\d{4}");
+                                    ///////////////////* IP validation *///////////////////
+        Matcher matcher = ipPattern.matcher(conn);
+        if (matcher.find()) { ip = matcher.group().replace("\\","").replace(",",""); }
+                                ///////////////////* Server Name validation *///////////////////
+        matcher = namePattern.matcher(conn);
+        if (matcher.find()) { name = matcher.group().replace("\\","").replace(",",""); }
+                                ///////////////////* Port validation *///////////////////
+        matcher = portPattern.matcher(conn);
+        if(matcher.find()) { port = matcher.group().replace("\\","").replace(",",""); }
 
-    private String formValidData(String str) {
-        String port;
-        String name;
-        String ip;
-        port = str.substring(0, str.indexOf("\\"));
-        name = str.substring(str.indexOf("\\") + 1, str.indexOf(","));
-        ip = str.substring(str.indexOf(",") + 1);
-        return "Port: " + port + "\nInstance name: " + name + "\nIP: " + ip;
+        if(ip==null)
+            return "Invalid connection type";
+        if(name==null)
+            name = "defaultServerName";
+        if(port==null)
+            port="8080";
+        return "IP: "+ip+"\nName: "+name+"\nPort: "+port+"\n";
     }
 
     public static void main(String[] args) {
