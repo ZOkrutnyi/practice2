@@ -5,28 +5,25 @@ import java.util.regex.Pattern;
 
 public class Part4 {
     public String connData(final String conn) {
-        String ip=null;
-        String name=null;
-        String port=null;
-        if (conn == null)
+        if (conn == null) {
             return "Invalid connection type";
-        Pattern global = Pattern.compile("^([^\\\\]\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\w+)|([A-z]+(|$))|(\\d{4})");
-        Matcher matcher = global.matcher(conn);
-        while (matcher.find()) {
-            if(matcher.group(1)!=null)
-                ip = matcher.group(1);
-            if(matcher.group(2)!=null)
-                name = matcher.group(2).replace("\\", "");
-            if(matcher.group(4)!=null)
-                port = matcher.group(4);
         }
-        if(ip==null)
+        Pattern global = Pattern.compile("^([^\\\\]\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\w+)|([A-z]+)|(\\d{4})");
+        Matcher matcher = global.matcher(conn);
+        String[] connection = new String[3];
+        int groupID = 1;
+        while (matcher.find() || groupID < 2) {
+            if (matcher.group(groupID) != null)
+                connection[groupID - 1] = matcher.group(groupID);
+            groupID++;
+        }
+        if (connection[0] == null)
             return "Invalid connection type";
-        if(name==null)
-            name = "defaultServerName";
-        if(port==null)
-            port="8080";
-        return "IP: "+ip+"\nName: "+name+"\nPort: "+port+"\n";
+        if (connection[1] == null)
+            connection[1] = "defaultServerName";
+        if (connection[2] == null)
+            connection[2] = "8080";
+        return "IP: " + connection[0] + "\nName: " + connection[1].replace("\\","") + "\nPort: " + connection[2] + "\n";
     }
 
     public static void main(String[] args) {
