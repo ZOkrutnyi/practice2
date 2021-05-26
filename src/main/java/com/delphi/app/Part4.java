@@ -5,25 +5,29 @@ import java.util.regex.Pattern;
 
 public class Part4 {
     public String connData(final String conn) {
+        String ip=null;
+        String name=null;
+        String port=null;
         if (conn == null) {
             return "Invalid connection type";
         }
         Pattern global = Pattern.compile("^([^\\\\]\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|\\w+)|([A-z]+)|(\\d{4})");
         Matcher matcher = global.matcher(conn);
-        String[] connection = new String[3];
-        int groupID = 1;
-        while (matcher.find() || groupID < 2) {
-            if (matcher.group(groupID) != null)
-                connection[groupID - 1] = matcher.group(groupID);
-            groupID++;
+        while (matcher.find()) {
+            if(matcher.group(1)!=null)
+                ip = matcher.group(1);
+            if(matcher.group(2)!=null)
+                name = matcher.group(2).replace("\\", "");
+            if(matcher.group(3)!=null)
+                port = matcher.group(3);
         }
-        if (connection[0] == null)
+        if (ip == null)
             return "Invalid connection type";
-        if (connection[1] == null)
-            connection[1] = "defaultServerName";
-        if (connection[2] == null)
-            connection[2] = "8080";
-        return "IP: " + connection[0] + "\nName: " + connection[1].replace("\\","") + "\nPort: " + connection[2] + "\n";
+        if(name==null)
+            name = "defaultServerName";
+        if(port==null)
+            port="8080";
+        return "IP: "+ip+"\nName: "+name+"\nPort: "+port+"\n";
     }
 
     public static void main(String[] args) {
@@ -31,7 +35,7 @@ public class Part4 {
         System.out.println(new Part4().connData("192.164.131.131\\MyTest,8674"));
         System.out.println(new Part4().connData("localhost"));
         System.out.println(new Part4().connData("localhost\\MyTest"));
-        System.out.println(new Part4().connData("localhost,1414"));
+        System.out.println(new Part4().connData("localhost,4321"));
 
     }
 }
