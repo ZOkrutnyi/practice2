@@ -13,11 +13,48 @@
             <artifactId>junit</artifactId>
             <version>4.13.2</version>
         </dependency>
+            <dependency>
+                <groupId>com.github.ricksbrown</groupId>
+                <artifactId>cowsay</artifactId>
+                <version>1.1.0</version>
+                <!-- The "lib" classifier is optional, but it gives you a MUCH smaller jar which is all you need as a Java library -->
+                <classifier>lib</classifier>
+            </dependency>
     </dependencies>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+    <build>
+    <plugins>
+    <plugin>
+        <groupId>com.github.ricksbrown</groupId>
+        <artifactId>cowsay</artifactId>
+        <version>1.1.0</version>
+        <executions>
+            <execution>
+                <id>say-moo</id>
+                <phase>compile</phase>
+                <goals>
+                    <goal>moo</goal>
+                </goals>
+                <configuration>
+                    <message>Compiling with Maven...</message>
+                    <cowfile>daemon</cowfile>
+                    <!-- Other options:
+                    <eyes>Oo</eyes>
+                    <mode>b</mode>
+                    <think>true</think>
+                    <tongue> V</tongue>
+                    <wrap>60</wrap>
+                    -->
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    </plugins>
+    </build>
+
 
 </project>
